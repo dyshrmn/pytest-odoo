@@ -26,6 +26,18 @@ except ImportError:  # Odoo >= 10.0
 
 
 def pytest_addoption(parser):
+    parser.addoption("--odoo-db_host",
+                     action="store",
+                     help="Host of database")
+    parser.addoption("--odoo-db_port",
+                     action="store",
+                     help="Port of database")
+    parser.addoption("--odoo-db_user",
+                     action="store",
+                     help="User of database")
+    parser.addoption("--odoo-db_password",
+                     action="store",
+                     help="User of database")
     parser.addoption("--odoo-database",
                      action="store",
                      help="Name of the Odoo database to test")
@@ -48,7 +60,7 @@ def pytest_cmdline_main(config):
         options = []
         # Replace --odoo-<something> by --<something> and prepare the argument
         # to propagate to odoo.
-        for option in ['--odoo-database', '--odoo-log-level', '--odoo-config']:
+        for option in ['--odoo-db_host', '--odoo-db_port', '--odoo-db_user', '--odoo-db_password', '--odoo-database', '--odoo-log-level', '--odoo-config']:
             value = config.getoption(option)
             if value:
                 odoo_arg = '--%s' % option[7:]
